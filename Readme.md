@@ -10,7 +10,7 @@
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_confluent"></a> [confluent](#requirement\_confluent) | 1.19.0 |
+| <a name="requirement_confluent"></a> [confluent](#requirement\_confluent) | ~>1.19.0 |
 
 ## Providers
 
@@ -26,11 +26,11 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [confluent_api_key.service_account_kafka_api_key](https://registry.terraform.io/providers/confluentinc/confluent/1.19.0/docs/resources/api_key) | resource |
-| [confluent_kafka_cluster.cluster](https://registry.terraform.io/providers/confluentinc/confluent/1.19.0/docs/resources/kafka_cluster) | resource |
-| [confluent_kafka_cluster_config.cluster_config](https://registry.terraform.io/providers/confluentinc/confluent/1.19.0/docs/resources/kafka_cluster_config) | resource |
-| [confluent_role_binding.saccount_role](https://registry.terraform.io/providers/confluentinc/confluent/1.19.0/docs/resources/role_binding) | resource |
-| [confluent_service_account.service_account](https://registry.terraform.io/providers/confluentinc/confluent/1.19.0/docs/data-sources/service_account) | data source |
+| [confluent_api_key.service_account_kafka_api_key](https://registry.terraform.io/providers/confluentinc/confluent/latest/docs/resources/api_key) | resource |
+| [confluent_kafka_cluster.cluster](https://registry.terraform.io/providers/confluentinc/confluent/latest/docs/resources/kafka_cluster) | resource |
+| [confluent_kafka_cluster_config.cluster_config](https://registry.terraform.io/providers/confluentinc/confluent/latest/docs/resources/kafka_cluster_config) | resource |
+| [confluent_role_binding.saccount_role](https://registry.terraform.io/providers/confluentinc/confluent/latest/docs/resources/role_binding) | resource |
+| [confluent_service_account.service_account](https://registry.terraform.io/providers/confluentinc/confluent/latest/docs/data-sources/service_account) | data source |
 
 ## Inputs
 

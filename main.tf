@@ -1,3 +1,6 @@
+data "confluent_environment" "env" {
+  id = var.environment
+}
 
 # Confluent Cloud cluster 
 resource "confluent_kafka_cluster" "cluster" {
@@ -33,17 +36,17 @@ data "confluent_service_account" "service_account" {
 }
 
 resource "confluent_role_binding" "saccount_role" {
-  count       = var.serv_account.role != null ? 1 : 0
+  count       = var.service_account.role != null ? 1 : 0
   principal   = "User:${data.confluent_service_account.service_account.id}"
   role_name   = var.service_account.role
-  crn_pattern = data.confluent_kafka_cluster.cluster.rbac_crn
+  crn_pattern = confluent_kafka_cluster.cluster.rbac_crn
   depends_on = [
-    data.confluent_service_account.saccount
+    data.confluent_service_account.service_account
   ]
 }
 
 resource "confluent_api_key" "service_account_kafka_api_key" {
-  display_name = "${var.serv_account.name}_kafka_api_key"
+  display_name = "${var.service_account.name}_kafka_api_key"
   description  = "Kafka API Key that is owned by ${var.service_account.name} service account"
   owner {
     id          = data.confluent_service_account.service_account.id
@@ -66,7 +69,7 @@ resource "confluent_api_key" "service_account_kafka_api_key" {
 }
 
 resource "confluent_kafka_cluster_config" "cluster_config" {
-  for_each = upper(var.cluster.type) == "DEDICATED" ? [1] : []
+  count = upper(var.cluster.type) == "DEDICATED" ? 1 : 0
   kafka_cluster {
     id = confluent_kafka_cluster.cluster.id
   }

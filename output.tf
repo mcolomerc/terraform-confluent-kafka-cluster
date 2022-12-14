@@ -1,3 +1,3 @@
-output "ccloud_cluster" {
+output "cluster" {
   value = confluent_kafka_cluster.cluster
 }

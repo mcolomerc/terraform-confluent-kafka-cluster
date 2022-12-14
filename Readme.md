@@ -5,18 +5,23 @@
 - cluster.type => BASIC or STANDARD or DEDICATED
   - for DEDICATED clusters, cluster.cku must be set
 
+`export TF_VAR_confluent_cloud_api_key="<CCLOUD_API_KEY>`  
+
+`export TF_VAR_confluent_cloud_api_secret="<CCLOUD_API_SECRET>`  
+
+
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_confluent"></a> [confluent](#requirement\_confluent) | ~>1.19.0 |
+| <a name="requirement_confluent"></a> [confluent](#requirement\_confluent) | ~>1.21.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_confluent"></a> [confluent](#provider\_confluent) | 1.19.0 |
+| <a name="provider_confluent"></a> [confluent](#provider\_confluent) | 1.21.0 |
 
 ## Modules
 
@@ -30,6 +35,7 @@ No modules.
 | [confluent_kafka_cluster.cluster](https://registry.terraform.io/providers/confluentinc/confluent/latest/docs/resources/kafka_cluster) | resource |
 | [confluent_kafka_cluster_config.cluster_config](https://registry.terraform.io/providers/confluentinc/confluent/latest/docs/resources/kafka_cluster_config) | resource |
 | [confluent_role_binding.saccount_role](https://registry.terraform.io/providers/confluentinc/confluent/latest/docs/resources/role_binding) | resource |
+| [confluent_environment.env](https://registry.terraform.io/providers/confluentinc/confluent/latest/docs/data-sources/environment) | data source |
 | [confluent_service_account.service_account](https://registry.terraform.io/providers/confluentinc/confluent/latest/docs/data-sources/service_account) | data source |
 
 ## Inputs
@@ -46,5 +52,5 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_ccloud_cluster"></a> [ccloud\_cluster](#output\_ccloud\_cluster) | n/a |
+| <a name="output_cluster"></a> [cluster](#output\_cluster) | n/a |
 <!-- END_TF_DOCS -->

@@ -33,7 +33,6 @@ variable "cluster" {
     type         = string
     cku          = optional(string)
     config       = optional(map(string))
-
   })
   validation {
     condition = (
@@ -49,4 +48,15 @@ variable "cluster" {
 - for DEDICATED clusters, cluster.cku must be set
     EOT
   }
+}
+variable "network" {
+  type = string
+  description = "Confluent Cloud Network ID"
+  default = ""
+}
+
+variable "byok" {
+  type = string
+  description = "Confluent BYOK ID"
+  default = ""
 }

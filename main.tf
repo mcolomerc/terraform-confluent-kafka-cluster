@@ -29,10 +29,23 @@ resource "confluent_kafka_cluster" "cluster" {
   environment {
     id = var.environment
   }
-} 
 
+  dynamic "network" {
+    for_each = var.network != "" ? [1] : []
+    content {
+      id = var.network
+    }
+  }
+
+  dynamic "byok_key" {
+    for_each = var.byok != "" ? [1] : []
+    content {
+      id = var.byok
+    }
+  }
+}
 data "confluent_service_account" "service_account" {
-  display_name = var.service_account.name 
+  display_name = var.service_account.name
 }
 
 resource "confluent_role_binding" "saccount_role" {
@@ -69,14 +82,14 @@ resource "confluent_api_key" "service_account_kafka_api_key" {
 }
 
 resource "confluent_kafka_cluster_config" "cluster_config" {
-  count = upper(var.cluster.type) == "DEDICATED" ? 1 : 0
+  count = var.cluster.config != null ? 1 : 0
   kafka_cluster {
     id = confluent_kafka_cluster.cluster.id
   }
- rest_endpoint = confluent_kafka_cluster.cluster.rest_endpoint
- config = var.cluster.config
+  rest_endpoint = confluent_kafka_cluster.cluster.rest_endpoint
+  config        = var.cluster.config
   credentials {
     key    = confluent_api_key.service_account_kafka_api_key.id
     secret = confluent_api_key.service_account_kafka_api_key.secret
   }
-} 
+}

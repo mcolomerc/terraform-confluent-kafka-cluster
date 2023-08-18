@@ -45,12 +45,13 @@ resource "confluent_kafka_cluster" "cluster" {
   }
 }
 data "confluent_service_account" "service_account" {
+  count       = var.service_account != null ? 1 : 0
   display_name = var.service_account.name
 }
 
 resource "confluent_role_binding" "saccount_role" {
-  count       = var.service_account.role != null ? 1 : 0
-  principal   = "User:${data.confluent_service_account.service_account.id}"
+  count       = var.service_account != null ? 1 : 0
+  principal   = "User:${data.confluent_service_account.service_account[0].id}"
   role_name   = var.service_account.role
   crn_pattern = confluent_kafka_cluster.cluster.rbac_crn
   depends_on = [
@@ -58,13 +59,17 @@ resource "confluent_role_binding" "saccount_role" {
   ]
 }
 
+ // Kafka Cluster API KEY - Moved to terrraform-confluent-iam module 
+ // Generate a Kafka API Key for the service account
+ // Error with Dedicated Private Networking - Requires Data Plane access 
 resource "confluent_api_key" "service_account_kafka_api_key" {
+   count       = var.service_account != null ? 1 : 0
   display_name = "${var.service_account.name}_kafka_api_key"
   description  = "Kafka API Key that is owned by ${var.service_account.name} service account"
   owner {
-    id          = data.confluent_service_account.service_account.id
-    api_version = data.confluent_service_account.service_account.api_version
-    kind        = data.confluent_service_account.service_account.kind
+    id          = data.confluent_service_account.service_account[0].id
+    api_version = data.confluent_service_account.service_account[0].api_version
+    kind        = data.confluent_service_account.service_account[0].kind
   }
 
   managed_resource {
@@ -79,17 +84,17 @@ resource "confluent_api_key" "service_account_kafka_api_key" {
   depends_on = [
     data.confluent_service_account.service_account
   ]
-}
+} 
 
 resource "confluent_kafka_cluster_config" "cluster_config" {
-  count = var.cluster.config != null ? 1 : 0
+  count = var.service_account != null ? 1 : 0
   kafka_cluster {
     id = confluent_kafka_cluster.cluster.id
   }
   rest_endpoint = confluent_kafka_cluster.cluster.rest_endpoint
   config        = var.cluster.config
   credentials {
-    key    = confluent_api_key.service_account_kafka_api_key.id
-    secret = confluent_api_key.service_account_kafka_api_key.secret
+    key    = confluent_api_key.service_account_kafka_api_key[0].id
+    secret = confluent_api_key.service_account_kafka_api_key[0].secret
   }
 }

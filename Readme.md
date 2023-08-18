@@ -24,6 +24,21 @@ module "cluster" {
   }
 ```
 
+Where [`cluster`](https://github.com/mcolomerc/terraform-confluent-kafka-cluster#input_cluster) can be defined as:
+
+```hcl
+     clusters = [
+          {
+            display_name = "mcolomer-standard-inventory_dev1"
+            availability = "MULTI_ZONE"
+            cloud        = "AWS"
+            region       = "eu-central-1"
+            type         = "DEDICATED"
+            cku          = "2" 
+          }
+        ] 
+```
+
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements

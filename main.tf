@@ -1,5 +1,5 @@
 data "confluent_environment" "env" {
-  id = var.environment
+  display_name = var.environment
 }
 
 # Confluent Cloud cluster 
@@ -27,7 +27,7 @@ resource "confluent_kafka_cluster" "cluster" {
     }
   }
   environment {
-    id = var.environment
+    id = data.confluent_environment.env.id
   }
 
   dynamic "network" {
